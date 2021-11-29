@@ -8,7 +8,7 @@ application = app = Flask(__name__)
 
 model = KeyBERT(model="distilbert-base-nli-mean-tokens")
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 
 df = pd.concat(
@@ -23,14 +23,14 @@ def home():
         return jsonify({'data': data})
 
 
-@app.route('/home/<int:num>', methods=['GET'])
+@application.route('/home/<int:num>', methods=['GET'])
 def disp(num):
     print(num)
     return jsonify({'data': num**2})
 
 
 # No of reviews
-@app.route('/no_of_reviews/<int:appid>')
+@application.route('/no_of_reviews/<int:appid>')
 def avg_playtime(appid):
 
     df3 = df[(df['appid'] == appid)]
@@ -40,7 +40,7 @@ def avg_playtime(appid):
 
 
 # True , False sentiments
-@app.route('/review_sentiments/<int:appid>')
+@application.route('/review_sentiments/<int:appid>')
 def rev_sentiments(appid):
 
     df3 = df[(df['appid'] == appid)]
@@ -53,7 +53,7 @@ def rev_sentiments(appid):
 # recent reviews
 
 
-@app.route('/recent_reviews/<int:appid>')
+@application.route('/recent_reviews/<int:appid>')
 def recent_reviews(appid):
 
     df3 = df[(df['appid'] == appid)]
@@ -65,7 +65,7 @@ def recent_reviews(appid):
 # trending keywords
 
 
-@app.route('/trending_keywords/<int:appid>')
+@application.route('/trending_keywords/<int:appid>')
 def trending_keywords(appid):
 
     df3 = df[(df['appid'] == appid)]
@@ -82,7 +82,7 @@ def trending_keywords(appid):
 # Average rating of game
 
 
-@app.route('/avg_rating/<int:appid>')
+@application.route('/avg_rating/<int:appid>')
 def avg_rating(appid):
 
     df3 = df[(df['appid'] == appid)]
@@ -91,7 +91,7 @@ def avg_rating(appid):
     return jsonify({'Average Rating': rate})
 
 
-@app.route('/top_games')
+@application.route('/top_games')
 def top_games():
     y = df.appid.unique()
     z = []
@@ -113,4 +113,4 @@ def top_games():
 # driver function
 if __name__ == '__main__':
 
-    app.run(debug=True)
+    application.run(debug=True)
